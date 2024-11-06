@@ -27,7 +27,7 @@ export default function ResetPassword() {
         setTimeout(() => {
           navigate("/signup-successfull?recover=true");
         }, 500);
-      } catch (error) {
+      } catch (error:any) {
         console.log(error);
         showAlert(
           error?.response?.data?.message || "Operation failed!",
