@@ -32,7 +32,7 @@ export const useLogin = () => {
         setTimeout(() => {
           navigate("/", { replace: true });
         }, 500);
-      } catch (error) {
+      } catch (error:any) {
         showAlert(
           error?.response?.data?.message || "Something went wrong!",
           "error"
