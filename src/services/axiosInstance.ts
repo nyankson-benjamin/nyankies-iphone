@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios from 'axios';
 
 // Create an instance of Axios
 const API = axios.create({
@@ -7,7 +7,7 @@ const API = axios.create({
 
 // Request interceptor
 API.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: any) => {
     // You can add authentication tokens or modify headers here
     const token = localStorage.getItem('token'); // Example: getting a token from local storage
     if (token) {
@@ -16,7 +16,7 @@ API.interceptors.request.use(
     console.log('Request sent: ', config);
     return config; // Always return the config
   },
-  (error: AxiosError) => {
+  (error: any) => {
     // Handle request errors
     console.error('Request error: ', error);
     return Promise.reject(error); // Reject the promise to handle in the catch block
@@ -25,12 +25,12 @@ API.interceptors.request.use(
 
 // Response interceptor
 API.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response: any) => {
     // Handle the response data here if needed
     console.log('Response received: ', response);
     return response; // Always return the response
   },
-  (error: AxiosError) => {
+  (error: any) => {
     // Handle response errors
     if (error.response) {
       // Server responded with a status other than 200 range

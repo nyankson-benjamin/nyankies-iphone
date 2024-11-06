@@ -32,7 +32,7 @@ export default function ResetPassword() {
         setTimeout(() => {
           navigate("/login");
         }, 500);
-      } catch (error) {
+      } catch (error:any) {
         showAlert(
           error?.response?.data?.message || "Operation failed!",
           "error"
