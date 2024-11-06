@@ -35,9 +35,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary: `
-        bg-[blue]
+        bg-primary
         text-white
-        hover:bg-primary-700
+        hover:bg-primaryDeep
         focus:ring-2
         focus:ring-primary-500
         focus:ring-offset-2

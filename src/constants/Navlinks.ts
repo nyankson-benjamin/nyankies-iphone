@@ -20,9 +20,9 @@ export const navLinks = [
 ];
 
 export const navLinksAdmin = [
-  ...navLinks,
+ 
   {
-    name: "Admin Dashboard",
+    name: "Dashboard",
     path: "/admin/dashboard",
   },
   {
@@ -33,23 +33,20 @@ export const navLinksAdmin = [
     name: "Edit Product",
     path: "/admin/edit-product",
   },
-  {
-    name: "Delete Product",
-    path: "/admin/delete-product",
-  },
+ 
   
   {
     name: "Orders",
-    path: "/orders",
+    path: "/admin/orders",
   },
   {
     name: "Customers",
-    path: "/customers",
+    path: "/admin/customers",
   },
-  {
-    name: "Analytics",
-    path: "/analytics",
-  },
+  // {
+  //   name: "Analytics",
+  //   path: "/analytics",
+  // },
 ];
 
 

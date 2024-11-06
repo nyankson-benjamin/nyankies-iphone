@@ -35,11 +35,11 @@ API.interceptors.response.use(
     if (error.response) {
       // Server responded with a status other than 200 range
       console.error('Response error: ', error.response.data);
-      alert(`Error: ${error.response.data.message || 'An error occurred'}`);
+    //   alert(`Error: ${error.response.data.message || 'An error occurred'}`);
     } else {
       // Network error or other issues
       console.error('Network error: ', error);
-      alert('Network error: Unable to connect to the server');
+    //   alert('Network error: Unable to connect to the server');
     }
     return Promise.reject(error); // Reject the promise
   }

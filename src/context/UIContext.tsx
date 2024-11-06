@@ -5,6 +5,7 @@ interface UIContextType {
   isSidebarOpen: boolean;
   toggleTheme: () => void;
   toggleSidebar: () => void;
+  closeSidebar: () => void;
 }
 
 export const UIContext = createContext<UIContextType>({
@@ -12,6 +13,7 @@ export const UIContext = createContext<UIContextType>({
   isSidebarOpen: false,
   toggleTheme: () => {},
   toggleSidebar: () => {},
+  closeSidebar: () => {},
 });
 
 export const UIProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -46,8 +48,12 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   const value = useMemo(
-    () => ({ isDarkMode, isSidebarOpen, toggleTheme, toggleSidebar }),
+    () => ({ isDarkMode, isSidebarOpen, toggleTheme, toggleSidebar, closeSidebar }),
     [isDarkMode, isSidebarOpen]
   );
 

@@ -1,22 +1,21 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-
-interface User {
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { logout } from "../services/auth";
+export interface User {
   id: string;
   email: string;
   name: string;
-  role:string
+  role: string;
+  exp: number;
 }
 
 interface AuthState {
   user: User | null;
-  token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  // Actions
-  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
+  setUser: (user: User) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -27,33 +26,14 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
 
-      login: async (email: string, password: string) => {
-        set({ isLoading: true });
-        try {
-          // Replace with your actual API call
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-            headers: { 'Content-Type': 'application/json' },
-          });
-          const data = await response.json();
-          
-          set({
-            user: data.user,
-            token: data.token,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-        } catch (error) {
-          set({ isLoading: false });
-          throw error;
-        }
+      setUser: (user: User) => {
+        set({ user, isAuthenticated: true });
       },
 
       logout: () => {
+        logout();
         set({
           user: null,
-          token: null,
           isAuthenticated: false,
         });
       },
@@ -65,10 +45,9 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'auth-storage', // name of the item in localStorage
-      partialize: (state) => ({ 
+      name: "auth-storage", // name of the item in localStorage
+      partialize: (state) => ({
         user: state.user,
-        token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
     }
