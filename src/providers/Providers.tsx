@@ -1,10 +1,11 @@
-import React from 'react'
-import { UIProvider } from '../context/UIContext'
+import React from "react";
+import { UIProvider } from "../context/UIContext";
+import { AlertProvider } from "../context/AlertContext";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <UIProvider>
-      {children}
+      <AlertProvider>{children}</AlertProvider>
     </UIProvider>
   );
 }

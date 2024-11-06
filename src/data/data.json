@@ -1,0 +1,11 @@
+{
+  "data": {
+    "phones": [
+      {
+        "title": "iPhone 15",
+        "price": 1000,
+        "image": "https://res.cloudinary.com/your_cloud_name/image/upload/v1234567890/iphone_5.jpg"
+      }
+    ]
+  }
+}

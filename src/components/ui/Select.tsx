@@ -1,15 +1,16 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
-import { cn } from '../../utils/cn'; // utility for merging classnames
+import { SelectHTMLAttributes, forwardRef } from 'react';
+import { cn } from '../../utils/cn';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
   helperText?: string;
   variant?: 'default' | 'filled';
   containerClassName?: string;
+  options: Array<{ value: string | number; label: string }>;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ 
     className, 
     label, 
@@ -17,12 +18,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     helperText,
     variant = 'default',
     containerClassName,
+    options,
     ...props 
   }, ref) => {
-    const baseInputStyles = `
+    const baseSelectStyles = `
       w-full
-      px-4 
-      py-2 
+      p-3 
       rounded-lg 
       border 
       transition-colors
@@ -48,8 +49,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       `
     };
 
-    const inputStyles = cn(
-      baseInputStyles,
+    const selectStyles = cn(
+      baseSelectStyles,
       variants[variant],
       error && 'border-red-500 focus:ring-red-500',
       className
@@ -62,11 +63,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        <input
+        <select
           ref={ref}
-          className={inputStyles}
+          className={selectStyles}
           {...props}
-        />
+        >
+            <option value="" disabled>{label}</option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
         {error && (
           <p className="text-sm text-red-600">{error}</p>
         )}
@@ -78,4 +86,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input'; 
+Select.displayName = 'Select';
