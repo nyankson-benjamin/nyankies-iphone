@@ -21,12 +21,12 @@ export const useRegister = () => {
           actions.setSubmitting(true);
           try {
             actions.setSubmitting(true);
-            const res = await API.post("/api/auth/signup", values);
+            const res = await API.post<{ message: string }>("/api/auth/signup", values);
             showAlert(res?.data?.message || "Operation successful!", "success");
             setTimeout(() => {
                 navigate("/signup-successfull?recover=false");
             }, 500);
-          } catch (error) {
+          } catch (error: any) {
             showAlert(error?.response?.data?.message || "Something went wrong!", "error");
             actions.setSubmitting(false);
           } finally {
