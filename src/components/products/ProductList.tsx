@@ -4,11 +4,18 @@ import ResponsiveGrid from "../common/ResponsiveGrid";
 import NoItemsFound from "./NoItemsFound";
 export default function ProductList() {
   const { data } = useProducts();
+  interface IProduct {
+    id: string;
+    title: string;
+    price: number;
+    images: string[];
+    category: string;
+  }
   interface Products {
-    products: Product[];
+    products: IProduct[];
   }
   console.log((data as Products)?.products);
-  const products = (data as Products)?.products?.map((product: Product) => {
+  const products = (data as Products)?.products?.map((product: IProduct) => {
     return {
       id: product?.id,
       name: product?.title,
