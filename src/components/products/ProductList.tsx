@@ -2,8 +2,9 @@ import { useProducts } from "../../hooks/useProducts";
 import ProductCard, { Product } from "./ProductCard";
 import ResponsiveGrid from "../common/ResponsiveGrid";
 import NoItemsFound from "./NoItemsFound";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 export default function ProductList() {
-  const { data } = useProducts();
+  const { data, isLoading } = useProducts();
   interface IProduct {
     id: string;
     title: string;
@@ -28,7 +29,11 @@ export default function ProductList() {
   console.log(products);
   return (
     <ResponsiveGrid>
-      {products?.length === 0 ? (
+      {isLoading ? (
+        Array.from({ length: 20 }).map((_, index) => (
+          <ProductCardSkeleton key={index} />
+        ))
+      ) : products?.length === 0 ? (
         <NoItemsFound />
       ) : (
         products?.map((product: Product) => (
