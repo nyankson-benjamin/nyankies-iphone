@@ -27,10 +27,7 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({
       : window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    const saved = localStorage.getItem("sidebarOpen");
-    return saved ? JSON.parse(saved) : true;
-  });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkMode((prev: boolean) => {
@@ -41,11 +38,7 @@ export const UIProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const toggleSidebar = () => {
-    setIsSidebarOpen((prev: boolean) => {
-      const newValue = !prev;
-      localStorage.setItem("sidebarOpen", JSON.stringify(newValue));
-      return newValue;
-    });
+    setIsSidebarOpen((prev: boolean) => !prev);
   };
 
   const closeSidebar = () => {

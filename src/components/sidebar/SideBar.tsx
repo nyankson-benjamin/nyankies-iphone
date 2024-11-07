@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useAuthStore } from "../../store/AuthStore";
 import { useUI } from "../../hooks/useUI";
 
 export default function SideBar({
@@ -10,7 +9,6 @@ export default function SideBar({
 }) {
   const location = useLocation();
   const { toggleSidebar } = useUI();
-  const { isAuthenticated, logout } = useAuthStore();
   
   return (
     <aside
@@ -39,21 +37,7 @@ export default function SideBar({
             {link.name}
           </Link>
         ))}
-        {isAuthenticated && (
-          <li
-            className="text-gray-700 dark:text-gray-200 hover:bg-gray-100 
-          dark:hover:bg-gray-700 rounded-md p-2 cursor-pointer 
-          transform transition-all duration-200
-          hover:scale-105 hover:translate-x-2
-          active:scale-95"
-            onClick={() => {
-              logout();
-              toggleSidebar();
-            }}
-          >
-            Logout
-          </li>
-        )}
+        
       </nav>
     </aside>
   );

@@ -10,13 +10,14 @@ import { RequireAuth } from "./components/AuthGuard";
 import AdminPage from "./pages/admin/AdminPage";
 import ResetPassword from "./pages/auth/ResetPassword";
 import PasswordRecovery from "./pages/auth/PasswordRecovery";
+import ProductsPage from "./pages/ProductsPage";
 
 function App() {
   return (
     <div>
       <PageLayout>
         <Routes>
-          <Route path="/" element={<p className="text-3xl">Hello world</p>} />
+          <Route path="/" element={<ProductsPage />} />
           <Route
             path="/login"
             element={
