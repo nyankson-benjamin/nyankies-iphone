@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import MenuIcon from "../../assets/icons/MenuIcon";
 import { useUI } from "../../hooks/useUI";
-import NavBarLinks from "./NavBarLinks";
-import { navAuth, navLinks } from "../../constants/Navlinks";
+import { useScreenWidth } from "../../hooks/useScreenWidth";
+import CategoriesDropDown from "./CategoriesDropDown";
+import UserDropdown from "./UserDropdown";
 import { useAuthStore } from "../../store/AuthStore";
+import { authRoutes } from "../../constants/Navlinks";
+import NavBarLinks from "./NavBarLinks";
 export default function TopNavBar() {
-  const { toggleSidebar } = useUI();
+  const { toggleSidebar, closeSidebar } = useUI();
   const { isAuthenticated } = useAuthStore();
-
-  const links = isAuthenticated ? navLinks : navAuth;   
+  const width = useScreenWidth();
+  if (width > 768) closeSidebar();
   const Logo = () => {
     return (
       <Link
@@ -19,7 +22,7 @@ export default function TopNavBar() {
       </Link>
     );
   };
- 
+
   return (
     <nav className="h-16 shadow-sm">
       <div className="flex justify-between items-center h-full px-4">
@@ -30,7 +33,11 @@ export default function TopNavBar() {
           />
           <Logo />
         </div>
-        <NavBarLinks links={links} />
+        <div className="flex items-center gap-2">
+          {width > 768 && <CategoriesDropDown />}
+          {!isAuthenticated && <NavBarLinks links={authRoutes} />}
+          {isAuthenticated && <UserDropdown />}
+        </div>
       </div>
     </nav>
   );

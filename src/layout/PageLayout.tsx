@@ -4,6 +4,8 @@ import SideBar from "../components/sidebar/SideBar";
 import { useUI } from "../hooks/useUI";
 import { useAuthStore } from "../store/AuthStore";
 import { navLinks, navAuth, navLinksAdmin } from "../constants/Navlinks";
+import OtherRoutes from "../components/OtherRoutes";
+import { useScreenWidth } from "../hooks/useScreenWidth";
 export default function PageLayout({
   children,
 }: {
@@ -19,12 +21,13 @@ export default function PageLayout({
   } else {
     links = navLinks;
   }
+  const width = useScreenWidth();
   return (
     <div>
       <TopNavBar />
       {isSidebarOpen && <SideBar links={links} />}
       {isAuthenticated && user?.role === "admin" && <AdminNavBar />}
-
+     { width < 768 && <OtherRoutes />}
       {children}
     </div>
   );
