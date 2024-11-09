@@ -32,7 +32,7 @@ export default function CategoriesDropDown() {
             Categories <ArrowDown />
           </button>
           {isDropdownOpen && (
-            <div className="absolute bg-white shadow-md mt-2 rounded right-0">
+            <div className="absolute bg-white shadow-md mt-2 rounded left-0">
               {categories.map((category) => (
                 <Link
                   key={category.path}

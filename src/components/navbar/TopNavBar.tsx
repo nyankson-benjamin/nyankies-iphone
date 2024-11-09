@@ -24,7 +24,7 @@ export default function TopNavBar() {
   };
 
   return (
-    <nav className="h-16 shadow-sm">
+    <nav className="h-16 shadow-sm bg-white">
       <div className="flex justify-between items-center h-full px-4">
         <div className="flex items-center gap-2">
           <MenuIcon

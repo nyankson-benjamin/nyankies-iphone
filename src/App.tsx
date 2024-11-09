@@ -11,6 +11,7 @@ import AdminPage from "./pages/admin/AdminPage";
 import ResetPassword from "./pages/auth/ResetPassword";
 import PasswordRecovery from "./pages/auth/PasswordRecovery";
 import ProductsPage from "./pages/ProductsPage";
+import { AddProduct } from "./pages/admin/AddProduct";
 
 function App() {
   return (
@@ -76,7 +77,7 @@ function App() {
             }
           >
             <Route path="dashboard" element={<p>Dashboard</p>} />
-            <Route path="add-product" element={<p>Add Product</p>} />
+            <Route path="add-product" element={<AddProduct />} />
             <Route path="edit-product" element={<p>Edit Product</p>} />
             <Route path="orders" element={<p>Orders</p>} />
             <Route path="customers" element={<p>Customers</p>} />

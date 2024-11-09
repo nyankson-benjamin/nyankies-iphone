@@ -24,5 +24,34 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const scrollbarUtilities = {
+        // Scrollbar width variants
+        ".scrollbar::-webkit-scrollbar": {
+          width: "1px",
+        },
+        ".scrollbar-2::-webkit-scrollbar": {
+          width: "2px",
+        },
+        ".scrollbar-3::-webkit-scrollbar": {
+          width: "3px",
+        },
+        ".scrollbar-4::-webkit-scrollbar": {
+          width: "4px",
+        },
+        // Custom scrollbar thumb
+        ".scrollbar-thumb::-webkit-scrollbar-thumb": {
+          backgroundColor: "#D8DAE5",
+          borderRadius: "10px",
+        },
+        // Custom scrollbar track
+        ".scrollbar-track::-webkit-scrollbar-track": {
+          backgroundColor: "#f1f1f1",
+        },
+      };
+
+      addUtilities(scrollbarUtilities);
+    },
+  ],
 }
