@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useAlert } from "./useAlert";
 
-const useFileUpload = (onFileChange?: (file: File) => void) => {
+const useFileUpload = (onFileChange?: (file: File) => void,) => {
   const [isDragActive, setIsDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const {showAlert} = useAlert();
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
@@ -28,14 +30,31 @@ const useFileUpload = (onFileChange?: (file: File) => void) => {
     setIsDragActive(false);
 
     const files = e.dataTransfer.files;
+    
     if (files && files.length > 0) {
       handleFile(files[0]);
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, maxSize?: number, multiple = false) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
+    if (!files || files.length === 0) return;
+
+    const fileArray = Array.from(files);
+    
+    if (multiple) {
+      fileArray.forEach(file => {
+        if (maxSize && file.size / 1024 / 1024 > maxSize) {
+          showAlert(`File size should not be more than ${maxSize}MB`, "error");
+          return;
+        }
+        handleFile(file);
+      });
+    } else {
+      if (maxSize && files[0].size / 1024 / 1024 > maxSize) {
+        showAlert(`File size should not be than ${maxSize}MB`, "error");
+        return;
+      }
       handleFile(files[0]);
     }
   };

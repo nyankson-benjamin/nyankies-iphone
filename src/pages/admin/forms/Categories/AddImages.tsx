@@ -11,11 +11,12 @@ import { UploadButton } from "../../../../components/UploadButton";
 import AddIcon from "../../../../assets/icons/AddIcon";
 import { v4 as uuidv4 } from "uuid";
 
-export default function AddImages({ handleSetImages }: { handleSetImages: (images: { image: string; id: string }[]) => void }) {
+export default function AddImages({ handleSetImages, maxSize=2, multiple=true }: { handleSetImages: (images: { image: string; id: string }[]) => void, maxSize: number, multiple: boolean }) {
   const [images, setImages] = useState<{ image: string; id: string }[]>([]);
-  const { handleFileChange, preview } = useFileUpload();
+  const { handleFileChange, preview, } = useFileUpload();
 
   useEffect(() => {
+    
     if (preview) {
       setImages([...images, { image: preview, id: uuidv4() }]);
     }
@@ -52,7 +53,7 @@ export default function AddImages({ handleSetImages }: { handleSetImages: (image
       </div>
       <div className="flex gap-2">
         <UploadButton
-          handleFileChange={handleFileChange}
+          handleFileChange={(e) => handleFileChange(e,maxSize,multiple)}
           className="bg-primary opacity-80 w-16 h-16 text-white flex items-center justify-center"
           disabled={images.length >= 5}
         >

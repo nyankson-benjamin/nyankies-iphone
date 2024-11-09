@@ -6,9 +6,10 @@ interface UploadButtonProps {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  
+  accept?: string;
+  multiple?: boolean;
 }
-export const UploadButton: FC<UploadButtonProps> = ({ handleFileChange, children, className, disabled }) => {
+export const UploadButton: FC<UploadButtonProps> = ({ handleFileChange, children, className, disabled, accept=".jpg,.jpeg,.png,.webp", multiple=true }) => {
 
   return <div className="flex items-center gap-2 flex-col md:flex-row lg:flex-row">
   
@@ -18,7 +19,8 @@ export const UploadButton: FC<UploadButtonProps> = ({ handleFileChange, children
       onChange={handleFileChange}
         id="file-input"
         className="hidden"
-
+        accept={accept}
+        multiple={multiple}
       />
       <label
         htmlFor={disabled ? "disabled" : "file-input"}
