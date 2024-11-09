@@ -92,7 +92,7 @@ export const useGetPhoneDetails = () => {
       );
       setPhoneDetails(response.data.data);
       setImages(response.data.data.pictures.map((picture) => ({
-        image: picture,
+        image: picture.image,
           id: uuidv4(),
         }))
       );    
