@@ -10,6 +10,8 @@ interface SelectComponentProps {
   searchPlaceholder?: string;
   showSearch?: boolean;
   disabled?: boolean;
+  error?: string;
+  showError?: boolean;
 }
 export default function SelectComponent({
   options,
@@ -20,6 +22,8 @@ export default function SelectComponent({
   searchPlaceholder = "Search",
   showSearch = true,
   disabled = false,
+  error,
+  showError = false,
 }: SelectComponentProps) {
   const [showOptions, setShowOptions] = useState(false);
   const filteredOptions = options
@@ -47,8 +51,9 @@ export default function SelectComponent({
   return (
     <div ref={dropdownRef}>
          <label className="block text-sm font-medium text-gray-700 py-0.5">
-            {placeholder}
+            {placeholder} {!showError && error && <span className="text-red-500 text-sm">*</span>}
           </label>
+          {showError && error && <p className="text-red-500 text-sm">{error}</p>}
       <button
         onClick={() => setShowOptions(!showOptions)}
         disabled={disabled}

@@ -4,7 +4,7 @@ import axios from "axios";
 import API from "../../services/axiosInstance";
 import { IPhoneDetails } from "../../types/phoneTypes";
 import { useAddPhone } from "../../store/admin/useAddPhone";
-
+import { v4 as uuidv4 } from "uuid";
 interface IPhone {
   brand_name: string;
   brand_id: number;
@@ -19,7 +19,7 @@ interface Phone {
   data: IPhone[];
 }
 export const useGetPhoneDetails = () => {
-  const { setDetails, setBrand, setModel } = useAddPhone();
+  const { setBrand, setModel, setImages } = useAddPhone();
   const [phones, setPhones] = useState<
     {
       label: string;
@@ -91,7 +91,12 @@ export const useGetPhoneDetails = () => {
         }
       );
       setPhoneDetails(response.data.data);
-      setDetails(response.data.data);
+      setImages(response.data.data.pictures.map((picture) => ({
+        image: picture,
+          id: uuidv4(),
+        }))
+      );    
+      //   setDetails(response.data.data);
     } catch (error) {
       console.error("Error fetching phone details:", error);
     } finally {
@@ -124,12 +129,14 @@ export const useGetPhoneDetails = () => {
     network: "",
     processor: "",
     description: "",
+    pictures:[]
   };
 
   useEffect(() => {
     setSelectedModel("");
     setPhoneDetails({
       ...initialDetails,
+      pictures:[]
     });
     
   }, [selectedPhone]);

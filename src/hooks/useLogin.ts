@@ -38,7 +38,6 @@ export const useLogin = () => {
           "error"
         );
       }
-      console.log(values);
     },
   });
 

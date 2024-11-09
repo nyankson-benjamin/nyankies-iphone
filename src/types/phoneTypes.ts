@@ -17,6 +17,7 @@ export interface IPhoneDetails {
   os_type: string;
   network: string;
   processor: string;
+  pictures: { image: string; id: string }[];
 }
 
 export interface PhoneStore {
@@ -30,4 +31,7 @@ export interface PhoneStore {
   setModel: (model: string) => void;
   condition: string;
   setCondition: (condition: string) => void;
+  category: string;
+  setCategory: (category: string) => void;
+  reset: () => void;
 }
