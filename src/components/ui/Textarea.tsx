@@ -1,7 +1,7 @@
-import { InputHTMLAttributes, forwardRef } from 'react';
-import { cn } from '../../utils/cn'; // utility for merging classnames
+import { TextareaHTMLAttributes, forwardRef } from 'react';
+import { cn } from '../../utils/cn';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ 
     className, 
     label, 
@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     containerClassName,
     ...props 
   }, ref) => {
-    const baseInputStyles = `
+    const baseTextareaStyles = `
       w-full
       px-4 
       py-2 
@@ -32,6 +32,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       focus:ring-primary
       disabled:bg-gray-100
       disabled:cursor-not-allowed
+      min-h-[100px]
+      resize-y
     `;
 
     const variants = {
@@ -48,8 +50,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       `
     };
 
-    const inputStyles = cn(
-      baseInputStyles,
+    const textareaStyles = cn(
+      baseTextareaStyles,
       variants[variant],
       error && 'border-red-500 focus:ring-red-500',
       className
@@ -57,14 +59,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn('space-y-1', containerClassName)}>
-        { (
+        {(
           <label className="block text-sm font-medium text-gray-700">
             {label ?? props.placeholder}
           </label>
         )}
-        <input
+        <textarea
           ref={ref}
-          className={inputStyles}
+          className={textareaStyles}
           {...props}
         />
         {error && (
@@ -78,4 +80,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input'; 
+Textarea.displayName = 'Textarea'; 
