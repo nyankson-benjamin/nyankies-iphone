@@ -112,7 +112,7 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
       setLoading(false);
       setOpen(true);
       reset();
-    } catch (error) {
+    } catch (error:any) {
       showAlert(error.message, "error");
       setLoading(false);
     } finally {
