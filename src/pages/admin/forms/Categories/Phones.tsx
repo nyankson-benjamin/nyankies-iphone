@@ -13,6 +13,7 @@ import { Textarea } from "../../../../components/ui/Textarea";
 import API from "../../../../services/axiosInstance";
 import { useAlert } from "../../../../hooks/useAlert";
 import { initialState } from "../../../../store/admin/useAddPhone";
+import { useImages } from "../../../../store/imageStore";
 
 export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
   setOpen,
@@ -32,7 +33,7 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
     setDetails,
     setCondition,
     setImages,
-    images,
+    // images,
     condition,
     category,
     reset,
@@ -40,6 +41,7 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
 
   const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
+  const { images } = useImages();
   const formik = useFormik({
     initialValues: {
       ...initialState,
