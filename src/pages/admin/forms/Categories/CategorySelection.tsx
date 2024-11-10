@@ -11,9 +11,10 @@ export default function CategorySelection({ category }: { category: string }) {
   const [open, setOpen] = useState(false);
   const { reset } = useAddPhone();
   const navigate = useNavigate();
+
   const handleYes = () => {
     switch (category) {
-      case "Phones":
+      case "phones":
         reset();
         break;
     }
@@ -47,7 +48,7 @@ export default function CategorySelection({ category }: { category: string }) {
           </div>
         </div>
       </Modal>
-      {category === "Phones" && <Phones setOpen={setOpen} />}
+      {category === "phones" && <Phones setOpen={setOpen} />}
     </div>
   );
 }

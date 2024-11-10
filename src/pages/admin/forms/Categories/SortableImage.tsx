@@ -1,5 +1,5 @@
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import DeleteIcon from "../../../../assets/icons/DeleteIcon";
 
 interface SortableImageProps {
@@ -14,6 +14,7 @@ export function SortableImage({ image, onDelete }: SortableImageProps) {
     setNodeRef,
     transform,
     transition,
+    isDragging,
   } = useSortable({ id: image.id });
 
   const style = {
@@ -27,7 +28,9 @@ export function SortableImage({ image, onDelete }: SortableImageProps) {
       style={style}
       {...attributes}
       {...listeners}
-      className="relative group cursor-grab active:cursor-grabbing"
+      className={`relative group cursor-grab active:cursor-grabbing ${
+        isDragging ? "opacity-50 border-2 border-[#a11515]" : ""
+      }`}
     >
       <img
         src={image.image}
@@ -39,4 +42,4 @@ export function SortableImage({ image, onDelete }: SortableImageProps) {
       </div>
     </div>
   );
-} 
+}

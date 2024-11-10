@@ -19,7 +19,7 @@ interface Phone {
   data: IPhone[];
 }
 export const useGetPhoneDetails = () => {
-  const { setBrand, setModel, setImages } = useAddPhone();
+  const { setBrand, setModel, setPhoneImages } = useAddPhone();
   const [phones, setPhones] = useState<
     {
       label: string;
@@ -91,11 +91,10 @@ export const useGetPhoneDetails = () => {
         }
       );
       setPhoneDetails(response.data.data);
-      setImages(response.data.data.pictures.map((picture) => ({
-        image: picture.image,
+      setPhoneImages(response.data.data.pictures?.slice(0, 5).map((picture) => ({
+        image: picture,
           id: uuidv4(),
-        }))
-      );    
+        })) ?? []);    
       //   setDetails(response.data.data);
     } catch (error) {
       console.error("Error fetching phone details:", error);

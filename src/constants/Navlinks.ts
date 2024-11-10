@@ -56,7 +56,7 @@ export const navAuth = [
 export const categories = [
   {
     name: "All",
-    path: "/categories",
+    path: "/",
   },
   {
     name: "Phones",

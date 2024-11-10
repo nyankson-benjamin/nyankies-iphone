@@ -10,7 +10,7 @@ export const AddProduct: FC = () => {
   const categoryOptions = categories
     .filter((category) => category.name !== "All")
     .map((category) => ({
-      value: category.name,
+      value: category.path,
       label: category.name,
     }));
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +24,7 @@ export const AddProduct: FC = () => {
         <SelectComponent
           options={categoryOptions}
           placeholder="Category"
-          onChange={(e) => setCategory(e)}
+          onChange={(e) => setCategory(e?.split("/")[2])}
           searchPlaceholder="Search Category"
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

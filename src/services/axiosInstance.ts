@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Create an instance of Axios
 const API = axios.create({
@@ -9,16 +9,14 @@ const API = axios.create({
 API.interceptors.request.use(
   (config: any) => {
     // You can add authentication tokens or modify headers here
-    const token = localStorage.getItem('token'); // Example: getting a token from local storage
+    const token = localStorage.getItem("token"); // Example: getting a token from local storage
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log('Request sent: ', config);
     return config; // Always return the config
   },
   (error: any) => {
     // Handle request errors
-    console.error('Request error: ', error);
     return Promise.reject(error); // Reject the promise to handle in the catch block
   }
 );
@@ -27,19 +25,16 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response: any) => {
     // Handle the response data here if needed
-    console.log('Response received: ', response);
     return response; // Always return the response
   },
   (error: any) => {
     // Handle response errors
     if (error.response) {
       // Server responded with a status other than 200 range
-      console.error('Response error: ', error.response.data);
-    //   alert(`Error: ${error.response.data.message || 'An error occurred'}`);
+      //   alert(`Error: ${error.response.data.message || 'An error occurred'}`);
     } else {
       // Network error or other issues
-      console.error('Network error: ', error);
-    //   alert('Network error: Unable to connect to the server');
+      //   alert('Network error: Unable to connect to the server');
     }
     return Promise.reject(error); // Reject the promise
   }

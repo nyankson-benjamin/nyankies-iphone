@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { SortableImage } from "./SortableImage";
 import {
   SortableContext,
+  arrayMove,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { closestCenter, DragEndEvent } from "@dnd-kit/core";
@@ -9,35 +9,31 @@ import { DndContext } from "@dnd-kit/core";
 import useFileUpload from "../../../../hooks/useFileUpload";
 import { UploadButton } from "../../../../components/UploadButton";
 import AddIcon from "../../../../assets/icons/AddIcon";
-import { v4 as uuidv4 } from "uuid";
+import { useImages } from "../../../../store/imageStore";
 
-export default function AddImages({ handleSetImages, maxSize=2, multiple=true }: { handleSetImages: (images: { image: string; id: string }[]) => void, maxSize: number, multiple: boolean }) {
-  const [images, setImages] = useState<{ image: string; id: string }[]>([]);
-  const { handleFileChange, preview, } = useFileUpload();
+export default function AddImages({
+  maxSize = 2,
+  multiple = true,
+}: {
+  maxSize: number;
+  multiple: boolean;
+}) {
+  const { handleFileChange } = useFileUpload();
+  const { setImages, images } = useImages();
 
-  useEffect(() => {
-    
-    if (preview) {
-      setImages([...images, { image: preview, id: uuidv4() }]);
-    }
-  }, [preview]);
-
-  useEffect(() => {
-    handleSetImages(images);
-  }, [images]);
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over) return;
-    if (active.id !== over.id) {
-      setImages((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
-        const newItems = [...items];
-        const [removed] = newItems.splice(oldIndex, 1);
-        newItems.splice(newIndex, 0, removed);
-        return newItems;
-      });
-    }
+    const activeImageID = active.id;
+    const overImageID = over.id;
+    if (activeImageID === overImageID) return;
+    const activeImageIndex = images.findIndex(
+      (image) => image.id === activeImageID
+    );
+    const overImageIndex = images.findIndex(
+      (image) => image.id === overImageID
+    );
+    setImages(arrayMove(images, activeImageIndex, overImageIndex));
   };
   return (
     <div className="flex gap-2 my-2 flex-col">
@@ -53,7 +49,7 @@ export default function AddImages({ handleSetImages, maxSize=2, multiple=true }:
       </div>
       <div className="flex gap-2">
         <UploadButton
-          handleFileChange={(e) => handleFileChange(e,maxSize,multiple)}
+          handleFileChange={(e) => handleFileChange(e, maxSize, multiple)}
           className="bg-primary opacity-80 w-16 h-16 text-white flex items-center justify-center"
           disabled={images.length >= 5}
         >
