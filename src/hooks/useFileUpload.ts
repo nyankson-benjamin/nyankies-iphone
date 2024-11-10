@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useAlert } from "./useAlert";
+import { useImages } from "../store/imageStore";
+import { v4 as uuidv4 } from 'uuid';
 
 const useFileUpload = (onFileChange?: (file: File) => void,) => {
   const [isDragActive, setIsDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const {showAlert} = useAlert();
+  const {addImage} = useImages()
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
@@ -68,6 +71,7 @@ const useFileUpload = (onFileChange?: (file: File) => void,) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
+      addImage({image:reader.result as string,id:uuidv4()})
     };
     reader.readAsDataURL(file);
   };
