@@ -13,10 +13,10 @@ export default function ProductList({
   error: string | null;
 }) {
   const { products } = useProductStore();
-  
+
   return (
     <ResponsiveGrid key={products.length}>
-      {loading ? (
+      {error ? <NoItemsFound /> : loading ? (
         Array.from({ length: 20 }).map((_, index) => (
           <ProductCardSkeleton key={index} />
         ))
