@@ -14,6 +14,7 @@ import API from "../../../../services/axiosInstance";
 import { useAlert } from "../../../../hooks/useAlert";
 import { initialState } from "../../../../store/admin/useAddPhone";
 import { useImages } from "../../../../store/imageStore";
+import { SortableImage } from "./SortableImage";
 
 export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
   setOpen,
@@ -29,19 +30,12 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
     count,
     phoneDetails,
   } = useGetPhoneDetails();
-  const {
-    setDetails,
-    setCondition,
-    setImages,
-    // images,
-    condition,
-    category,
-    reset,
-  } = useAddPhone();
+  const { setDetails, setCondition, condition, category, reset, phoneImages,setPhoneImages } =
+    useAddPhone();
 
   const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
-  const { images } = useImages();
+  const { images, reset: resetImages } = useImages();
   const formik = useFormik({
     initialValues: {
       ...initialState,
@@ -71,6 +65,9 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
   }, [phoneDetails]);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchModel, setSearchModel] = useState("");
+
+  const imageValidation = formik.values.condition === "Brand New" ? phoneImages.length < 2 : images.length < 2;
 
   const isDisabled =
     formik.values.battery === "" ||
@@ -80,7 +77,7 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
     formik.values.display_res === "" ||
     formik.values.display_size === "" ||
     formik.values.description === "" ||
-    images.length < 2 ||
+    imageValidation ||
     condition === "" ||
     formik.values.price === 0 ||
     formik.values.stock === 0 ||
@@ -99,10 +96,11 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
     model: selectedModel,
     condition,
     details: formik.values,
-    images: images,
+    images: formik.values.condition === "Brand New" ? phoneImages : images,
     category,
     price: formik.values.price,
     stock: formik.values.stock,
+    title: formik.values.device_name,
   };
   const handleSubmit = async () => {
     try {
@@ -113,8 +111,9 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
       }
       setLoading(false);
       setOpen(true);
+      resetImages();
       reset();
-    } catch (error:any) {
+    } catch (error: any) {
       showAlert(error.message, "error");
       setLoading(false);
     } finally {
@@ -139,11 +138,11 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
 
           <SelectComponent
             options={phoneModels()}
-            setSearchTerm={setSearchTerm}
+            setSearchTerm={setSearchModel}
             onChange={(e) => {
               setSelectedModel(e as string);
             }}
-            searchTerm={searchTerm}
+            searchTerm={searchModel}
             placeholder="Select a model"
             searchPlaceholder="Search a model"
             disabled={!selectedPhone}
@@ -157,9 +156,9 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <SelectComponent
                 options={[
-                  { label: "Brand New", value: "new" },
-                  { label: "Refurbished", value: "refa" },
-                  { label: "Used", value: "used" },
+                  { label: "Brand New", value: "Brand New" },
+                  { label: "Refurbished", value: "Refurbished" },
+                  { label: "Used", value: "Used" },
                 ]}
                 onChange={(e) => {
                   setCondition(e);
@@ -290,7 +289,23 @@ export const Phones: FC<{ setOpen: (open: boolean) => void }> = ({
             />
           </div>
         )}
-        <AddImages handleSetImages={setImages} maxSize={2} multiple={true} />
+
+        {formik.values.condition === "Brand New" ? (
+          <div className="flex gap-2">
+            {phoneImages?.map(( image ) => (
+              <SortableImage
+
+                key={image.id}
+                image={image}
+                onDelete={() => {
+                  setPhoneImages(phoneImages.filter((img) => img.id !== image.id));
+                }}
+              />
+            ))}
+          </div>
+        ) : (
+          <AddImages maxSize={2} multiple={true} />
+        )}
         <Button
           className="w-full mt-2"
           disabled={isDisabled}

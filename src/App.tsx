@@ -12,13 +12,18 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import PasswordRecovery from "./pages/auth/PasswordRecovery";
 import ProductsPage from "./pages/ProductsPage";
 import { AddProduct } from "./pages/admin/AddProduct";
-
+import ProductsOutlet from "./pages/ProductsOutlet";
+import CategoriesPage from "./pages/CategoriesPage";
+import CartPage from "./pages/CartPage";  
 function App() {
   return (
     <div>
       <PageLayout>
         <Routes>
           <Route path="/" element={<ProductsPage />} />
+          <Route path="/categories" element={<ProductsOutlet />}> 
+            <Route path=":categoryId" element={<CategoriesPage />} />
+          </Route>
           <Route
             path="/login"
             element={
@@ -68,6 +73,7 @@ function App() {
               </RedirectIfAuthenticated>
             }
           />
+          <Route path="/cart" element={<CartPage />} />
           <Route
             path="/admin"
             element={
@@ -76,7 +82,7 @@ function App() {
               </RequireAuth>
             }
           >
-            <Route path="dashboard" element={<p>Dashboard</p>} />
+            <Route path="dashboard" element={<ProductsPage/>} />
             <Route path="add-product" element={<AddProduct />} />
             <Route path="edit-product" element={<p>Edit Product</p>} />
             <Route path="orders" element={<p>Orders</p>} />

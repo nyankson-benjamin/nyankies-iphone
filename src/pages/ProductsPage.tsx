@@ -1,11 +1,20 @@
 
 import ProductList from "../components/products/ProductList";
-export default function ProductsPage() {
+import { useProducts } from "../hooks/useProducts";
+import { useProductStore } from "../store/productStore";
 
+export default function ProductsPage() {
+  const { isLoading } = useProducts();
+  const products = useProductStore((state) => state.products);
 
   return (
     <div>
-      <ProductList />
+      <ProductList
+        products={products}
+        loading={isLoading}
+        error={null}
+        key={products.length}
+      />
     </div>
   );
 }

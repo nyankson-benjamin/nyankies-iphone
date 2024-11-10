@@ -29,8 +29,8 @@ export const useAddPhone = create<PhoneStore>()(
       ...initialState
     },
     setDetails: (details) => set({ details }),
-    images: [],
-    setImages: (images) => set({ images }),
+    phoneImages: [],
+    setPhoneImages: (images) => set({ phoneImages: images }),
     brand: "",
     setBrand: (brand) => set({ brand }),
     model: "",
@@ -39,6 +39,6 @@ export const useAddPhone = create<PhoneStore>()(
     setCondition: (condition) => set({ condition }),
     category: "",
     setCategory: (category) => set({ category }),
-    reset: () => set({ details: { ...initialState }, images: [], brand: "", model: "", condition: "", category: "" }),  
+    reset: () => set({ details: { ...initialState }, phoneImages: [], brand: "", model: "", condition: "", category: "" }),  
   }))
 );
