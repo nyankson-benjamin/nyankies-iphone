@@ -17,14 +17,14 @@ export interface IPhoneDetails {
   os_type: string;
   network: string;
   processor: string;
-  pictures: { image: string; id: string, blob: Blob }[];
+  pictures: { image: string; id: string, }[];
 }
 
 export interface PhoneStore {
   details: IPhoneDetails;
   setDetails: (details: IPhoneDetails) => void;
-  images: { image: string; id: string, blob: Blob }[];
-  setImages: (images: { image: string; id: string, blob: Blob }[]) => void;
+  images: { image: string; id: string, }[];
+  setImages: (images: { image: string; id: string, }[]) => void;
   brand: string;
   setBrand: (brand: string) => void;
   model: string;
