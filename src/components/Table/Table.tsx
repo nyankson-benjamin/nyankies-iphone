@@ -32,7 +32,7 @@ export function Table<T extends object>({
   })
 
   return (
-    <div className={`border rounded-lg overflow-hidden ${className}`}>
+    <div className={`border rounded-lg w-full overflow-scroll scrollbar-2 ${className}`}>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           {table.getHeaderGroups().map(headerGroup => (
@@ -53,7 +53,7 @@ export function Table<T extends object>({
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+            <tr key={row.id} className="hover:bg-gray-100">
               {row.getVisibleCells().map(cell => (
                 <td
                   key={cell.id}
@@ -68,7 +68,7 @@ export function Table<T extends object>({
       </table>
 
       {/* Pagination Controls */}
-      <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200 bg-white">
+      <div className="px-6 py-3 w-full flex items-center justify-between border-t border-gray-200 bg-white">
         <div className="flex-1 flex items-center justify-between">
           <div className="flex gap-x-2 items-center">
             <span className="text-sm text-gray-700">
