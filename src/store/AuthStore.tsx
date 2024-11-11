@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { logout } from "../services/auth";
 export interface User {
-  id: string;
+  _id: string;
   email: string;
   name: string;
   role: string;
@@ -19,6 +19,9 @@ interface AuthState {
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
   setUser: (user: User) => void;
+  users: User[] | null;
+  setUsers: (users: User[]) => void;
+  updateRole: (id: string, role: string) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -28,6 +31,7 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
       isLoading: false,
+      users: null,
 
       setUser: (user: User) => {
         set({ user, isAuthenticated: true });
@@ -46,7 +50,18 @@ export const useAuthStore = create<AuthState>()(
           user: state.user ? { ...state.user, ...userData } : null,
         }));
       },
+      setUsers: (users: User[]) => {
+        set({ users });
+      },
+      updateRole: (id: string, role: string) => {
+        set((state) => ({
+          users: state.users?.map((user) =>
+            user._id === id ? { ...user, role } : user
+          ),
+        }));
+      },
     }),
+    
     {
       name: "auth-storage", // name of the item in localStorage
       partialize: (state) => ({

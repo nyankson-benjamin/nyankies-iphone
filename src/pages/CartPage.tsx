@@ -19,7 +19,7 @@ export default function CartPage() {
 
     try {
       setIsLoading(true);
-      const response = await API.post("/api/checkout", {
+      const response = await API.post("/api/checkdout", {
         products: cart,
         shippingAddress: {
           address: user?.address,
@@ -27,7 +27,7 @@ export default function CartPage() {
           location: user?.location,
         },
         email: user?.email,
-        userId: user?.id,
+        userId: user?._id,
         totalAmount: cartTotal,
       });
       clearCart();
