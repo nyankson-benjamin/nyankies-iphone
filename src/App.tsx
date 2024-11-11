@@ -87,6 +87,7 @@ function App() {
             <Route path="add-product" element={<AddProduct />} />
             <Route path="edit-product" element={<p>Edit Product</p>} />
             <Route path="orders" element={<OrdersPage />} />
+            <Route path="order/:orderId" element={<p>Order Details</p>} />
             <Route path="customers" element={<p>Customers</p>} />
             {/* Redirect /admin to /admin/dashboard */}
             <Route index element={<Navigate to="dashboard" replace />} />
