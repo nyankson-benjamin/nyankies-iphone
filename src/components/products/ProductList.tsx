@@ -7,11 +7,11 @@ import { useProductStore } from "../../store/productStore";
 export default function ProductList({
   loading,
   error,
-}: {
+}: Readonly<{
   products: IProduct[];
   loading: boolean;
   error: string | null;
-}) {
+}>) {
   const { products } = useProductStore();
 
   return (

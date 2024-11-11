@@ -55,11 +55,14 @@ export const useCartStore = create<CartStore>()(
 
         updateCartItemQuantity: (productId: string, quantity: number) =>
           set((state) => {
+            // Ensure quantity is not negative
+            const safeQuantity = Math.max(1, quantity);
+            
             const updatedCart = state.cart.map((item) =>
-              item._id === productId ? { ...item, quantity } : item
+              item._id === productId ? { ...item, quantity: safeQuantity } : item
             );
             const newTotal = updatedCart.reduce(
-              (acc, item) => acc + item.price * item.quantity,
+              (acc, item) => acc + item.price * (item.quantity || 0),
               0
             );
             return {
