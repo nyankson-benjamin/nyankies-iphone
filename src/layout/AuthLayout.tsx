@@ -13,7 +13,7 @@ export default function AuthLayout({
         {/* <aside className="w-full sm:hidden md:hidden lg:block xl:block">
           side bar
         </aside> */}
-        <div className="flex flex-col gap-2 w-full items-center border-t-4 border-primary rounded-lg p-5">
+        <div className="flex flex-col gap-2 w-full items-center border-t-4 border-primary rounded-lg p-5 bg-white">
         <h1 className="text-2xl font-bold text-primary uppercase">{text}</h1>
         {children}
         </div>

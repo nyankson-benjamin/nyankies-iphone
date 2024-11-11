@@ -15,6 +15,7 @@ import { AddProduct } from "./pages/admin/AddProduct";
 import ProductsOutlet from "./pages/ProductsOutlet";
 import CategoriesPage from "./pages/CategoriesPage";
 import CartPage from "./pages/CartPage";  
+import OrdersPage from "./pages/admin/forms/OrdersPage";
 function App() {
   return (
     <div>
@@ -85,7 +86,7 @@ function App() {
             <Route path="dashboard" element={<ProductsPage/>} />
             <Route path="add-product" element={<AddProduct />} />
             <Route path="edit-product" element={<p>Edit Product</p>} />
-            <Route path="orders" element={<p>Orders</p>} />
+            <Route path="orders" element={<OrdersPage />} />
             <Route path="customers" element={<p>Customers</p>} />
             {/* Redirect /admin to /admin/dashboard */}
             <Route index element={<Navigate to="dashboard" replace />} />

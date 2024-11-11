@@ -7,6 +7,9 @@ export interface User {
   name: string;
   role: string;
   exp: number;
+  address: string;
+  phone: string;
+  location: string;
 }
 
 interface AuthState {
