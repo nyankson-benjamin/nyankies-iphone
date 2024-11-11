@@ -27,7 +27,7 @@ export default function OrdersPage() {
     data: orders,
     isLoading,
     isError,
-  } = useFechData<Order>("orders", "orders");
+  } = useFechData<Order[]>("orders", "orders");
   console.log(orders);
 
   const columnHelper = createColumnHelper<Order>();
