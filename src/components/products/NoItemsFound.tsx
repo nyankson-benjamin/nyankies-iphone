@@ -2,7 +2,7 @@ import { Button } from "../ui/Button";
 
 export default function NoItemsFound({ text }: Readonly<{ text?: string }>) {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center bg-white rounded-lg shadow">
+    <div className="flex flex-col items-center justify-center p-8 text-center bg-white rounded-lg shadow m-5">
       <div className="mb-4">
         <svg
           className="w-16 h-16 text-gray-400"

@@ -7,11 +7,13 @@ import API from "../../services/axiosInstance";
 import { useAuthStore } from "../../store/AuthStore";
 import { useAlert } from "../../hooks/useAlert";
 import TableLoader from "../../components/loaders/TableLoader";
+import ErrorPage from "../../components/error/ErrorPage";
 export const Customers: FC = () => {
   const {
     data: customers,
     isLoading,
     isError,
+    error
   } = useFechData<User[]>("users", "customers");
   const columnHelper = createColumnHelper<User>();
   const { updateRole: updateRoleStore, users, setUsers } = useAuthStore();
@@ -70,12 +72,14 @@ export const Customers: FC = () => {
     }),
   ];
 
+  console.log("eer", error)
   return (
     <div>
       <p className="text-2xl font-bold py-4 text-center bg-gray-100">
         Customers
       </p>
       {isLoading && <TableLoader />}
+      {isError && <ErrorPage message={error?.message}/>}
       {!isLoading && !isError && <Table data={users ?? []} columns={columns} />}
     </div>
   );

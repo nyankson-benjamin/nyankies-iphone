@@ -4,7 +4,7 @@ import { useProducts } from "../hooks/useProducts";
 import { useProductStore } from "../store/productStore";
 
 export default function ProductsPage() {
-  const { isLoading } = useProducts();
+  const { isLoading, isError, error } = useProducts();
   const products = useProductStore((state) => state.products);
 
   return (
@@ -12,7 +12,8 @@ export default function ProductsPage() {
       <ProductList
         products={products}
         loading={isLoading}
-        error={null}
+        error={error}
+        isError={isError}
         key={products.length}
       />
     </div>
