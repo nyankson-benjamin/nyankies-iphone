@@ -23,9 +23,9 @@ export default function ProductList({endpoint}:{endpoint:string}) {
     );
   }
   if (isError) return <ErrorPage message={error?.message} />;
-  if(!loading && !isError && products?.length === 0 ) return  <NoItemsFound />
+  if(!loading && !isError && productData?.length === 0 ) return  <NoItemsFound />
   return (
-    <ResponsiveGrid key={products.length}>
+    <ResponsiveGrid key={productData.length}>
       {productData?.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}
