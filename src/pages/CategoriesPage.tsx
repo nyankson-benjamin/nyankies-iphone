@@ -8,7 +8,7 @@ export default function CategoriesPage() {
 
   return (
     <div>
-      <ProductList  endpoint={`/categories/${categoryId}`} />
+      <ProductList  endpoint={`categories/${categoryId}`} />
     </div>
   );
 }
