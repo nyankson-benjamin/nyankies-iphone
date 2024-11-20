@@ -7,11 +7,13 @@ import ErrorPage from "../error/ErrorPage";
 import { useProducts } from "../../hooks/useProducts";
 import { isLoggedIn } from "../../services/auth";
 import { useMemo } from "react";
+import { useAuthStore } from "../../store/AuthStore";
 
 export default function ProductList({endpoint}:{endpoint:string}) {
   const { products } = useProductStore();
+  const {user} = useAuthStore()
   const { isLoading:loading, isError, error,data } = useProducts(endpoint);
-  const productData = useMemo(()=>isLoggedIn() ? products : data,[data, products])
+  const productData = useMemo(()=>isLoggedIn() && user?.role==="admin" ? products : data,[data, products, user?.role])
 
   if (loading && !productData?.length) {
     return (

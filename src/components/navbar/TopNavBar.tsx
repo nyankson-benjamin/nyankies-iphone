@@ -4,13 +4,14 @@ import { useUI } from "../../hooks/useUI";
 import { useScreenWidth } from "../../hooks/useScreenWidth";
 import CategoriesDropDown from "./CategoriesDropDown";
 import UserDropdown from "./UserDropdown";
-import { authRoutes } from "../../constants/Navlinks";
+import { authRoutes, navAuth, navLinks, navLinksAdmin } from "../../constants/Navlinks";
 import NavBarLinks from "./NavBarLinks";
 import CartIcon from "../../assets/icons/CartIcon";
 // import { useCartStore } from "../../store/CartStore";
 import { useCartStore } from "../../store/useCart";
 import { isLoggedIn } from "../../services/auth";
 import { useEffect } from "react";
+import { useAuthStore } from "../../store/AuthStore";
 
 const Logo = () => {
   return (
@@ -26,7 +27,15 @@ export default function TopNavBar() {
   const { toggleSidebar, closeSidebar } = useUI();
   const width = useScreenWidth();
   const { cart } = useCartStore();
-
+  const {user} = useAuthStore()
+  let links: { name: string; path: string }[] = [];
+  if (!isLoggedIn()) {
+    links = navAuth;
+  } else if (user?.role === "admin") {
+    links = [...navLinks, ...navLinksAdmin];
+  } else {
+    links = navLinks;
+  }
   useEffect(() => {
     if (!isLoggedIn()) {
       localStorage.removeItem("auth-storage");
@@ -39,10 +48,10 @@ export default function TopNavBar() {
     <nav className="h-16 shadow-sm bg-white">
       <div className="flex justify-between items-center h-full px-4">
         <div className="flex items-center gap-2">
-          <MenuIcon
+          {links?.length>0 && <MenuIcon
             onClick={() => toggleSidebar()}
             className="block md:hidden lg:hidden xl:hidden"
-          />
+          />}
           <Logo />
         </div>
         <div className="flex items-center gap-2">
