@@ -1,7 +1,6 @@
-
-function CloseIcon() {
+function CloseIcon({ onClick }: { onClick?: () => void, }) {
   return (
-    <div>
+    <div onClick={onClick} className="cursor-pointer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

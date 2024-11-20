@@ -4,8 +4,7 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { closestCenter, DragEndEvent } from "@dnd-kit/core";
-import { DndContext } from "@dnd-kit/core";
+import { closestCenter, DragEndEvent, DndContext } from "@dnd-kit/core";
 import useFileUpload from "../../../../hooks/useFileUpload";
 import { UploadButton } from "../../../../components/UploadButton";
 import AddIcon from "../../../../assets/icons/AddIcon";
@@ -14,10 +13,10 @@ import { useImages } from "../../../../store/imageStore";
 export default function AddImages({
   maxSize = 2,
   multiple = true,
-}: {
+}: Readonly<{
   maxSize: number;
   multiple: boolean;
-}) {
+}>) {
   const { handleFileChange } = useFileUpload();
   const { setImages, images } = useImages();
 

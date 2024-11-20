@@ -1,5 +1,5 @@
 import { Button } from '../ui/Button'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 interface ErrorPageProps {
   title?: string
@@ -12,12 +12,13 @@ export default function ErrorPage({
   title = "Something went wrong",
   message = "An error occurred while loading the data. Please try again later.",
   showRetry = true,
-  onRetry
-}: ErrorPageProps) {
+  onRetry= ()=>window.location.reload()
+}: Readonly<ErrorPageProps>) {
   const navigate = useNavigate()
-
+const location = useLocation()
   return (
-    <div className="min-h-[400px] flex flex-col items-center justify-center p-4 bg-white rounded-lg w-full md:w-1/2 lg:w-1/3 mx-auto">
+    <div className='flex items-center justify-center my-10'>
+      <div className="min-h-[400px] m-10 flex flex-col items-center justify-center p-4 bg-white rounded-lg w-full md:w-1/2 lg:w-1/3">
       {/* Error Icon */}
       <div className="text-red-500 mb-4">
         <svg 
@@ -42,12 +43,12 @@ export default function ErrorPage({
 
       {/* Action Buttons */}
       <div className="flex gap-4">
-        <Button 
+       {location.pathname !== "/" && <Button 
           onClick={() => navigate(-1)}
           variant="outline"
         >
           Go Back
-        </Button>
+        </Button>}
         {showRetry && (
           <Button 
             onClick={onRetry}
@@ -57,6 +58,7 @@ export default function ErrorPage({
           </Button>
         )}
       </div>
+    </div>
     </div>
   )
 } 

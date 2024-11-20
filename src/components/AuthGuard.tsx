@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store/AuthStore';
+import { isLoggedIn } from '../services/auth';
 
 // Redirect authenticated users away from auth pages
 export const RedirectIfAuthenticated = ({ children }: { children: React.ReactNode }) => {
-  const {isAuthenticated} = useAuthStore();
   
-  if (isAuthenticated) {
+  if (isLoggedIn()) {
     return <Navigate to="/" replace />;
   }
 
@@ -19,9 +19,9 @@ export const RequireAuth = ({
   children: React.ReactNode;
   requiredRole?: string;
 }) => {
-  const { isAuthenticated, user } = useAuthStore();
+  const { user } = useAuthStore();
 
-  if (!isAuthenticated) {
+  if (!isLoggedIn()) {
     // Redirect to login if not authenticated
     return <Navigate to="/login" replace />;
   }

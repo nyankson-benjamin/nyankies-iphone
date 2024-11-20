@@ -10,11 +10,11 @@ export interface User {
   address: string;
   phone: string;
   location: string;
+  profile_image:string
 }
 
 interface AuthState {
   user: User | null;
-  isAuthenticated: boolean;
   isLoading: boolean;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
@@ -22,6 +22,7 @@ interface AuthState {
   users: User[] | null;
   setUsers: (users: User[]) => void;
   updateRole: (id: string, role: string) => void;
+  updateProfileImage: (profileImage: string) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -29,19 +30,17 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       token: null,
-      isAuthenticated: false,
       isLoading: false,
       users: null,
 
       setUser: (user: User) => {
-        set({ user, isAuthenticated: true });
+        set({ user, });
       },
 
       logout: () => {
         logout();
         set({
           user: null,
-          isAuthenticated: false,
         });
       },
 
@@ -60,13 +59,17 @@ export const useAuthStore = create<AuthState>()(
           ),
         }));
       },
+      updateProfileImage: (profileImage: string) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, profile_image: profileImage } : null,
+        }));
+      },
     }),
     
     {
       name: "auth-storage", // name of the item in localStorage
       partialize: (state) => ({
         user: state.user,
-        isAuthenticated: state.isAuthenticated,
       }),
     }
   )
