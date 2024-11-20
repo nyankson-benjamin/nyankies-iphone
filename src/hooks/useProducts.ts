@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/AuthStore";
 import { isLoggedIn } from "../services/auth";
 
-export const useProducts = () => {
+export const useProducts = (endpoint="/api/products") => {
   const setProducts = useProductStore((state) => state.setProducts);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -17,7 +17,7 @@ export const useProducts = () => {
     const getProducts = async () => {
       try {
         setLoading(true);
-        const response = await API.get<IProduct[]>(`/api/products`);
+        const response = await API.get<IProduct[]>("/api/"+endpoint);
         setData(response?.data ?? []);
         if (isLoggedIn() && user?.role === "admin") {
           setProducts(response?.data || []);
@@ -31,7 +31,7 @@ export const useProducts = () => {
       }
     };
     getProducts();
-  }, [setProducts, user?.role]);
+  }, [endpoint, setProducts, user?.role]);
 
   return { isLoading: loading, error, isError, data };
 };

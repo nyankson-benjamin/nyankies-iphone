@@ -8,9 +8,9 @@ import { useProducts } from "../../hooks/useProducts";
 import { isLoggedIn } from "../../services/auth";
 import { useMemo } from "react";
 
-export default function ProductList() {
+export default function ProductList({endpoint}:{endpoint:string}) {
   const { products } = useProductStore();
-  const { isLoading:loading, isError, error,data } = useProducts();
+  const { isLoading:loading, isError, error,data } = useProducts(endpoint);
   const productData = useMemo(()=>isLoggedIn() ? products : data,[data, products])
 
   if (loading && !productData?.length) {
