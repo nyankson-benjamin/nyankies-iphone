@@ -1,43 +1,23 @@
-import axios from "axios";
+// axiosInstance.js
+import axios from 'axios';
+import { getToken } from './auth';
 
-// Create an instance of Axios
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+const baseUrl = import.meta.env.VITE_API_BASE_URL
+const instance = axios.create({
+  baseURL: baseUrl, // Your API base URL
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${getToken()}`,
+  },
+});
+export const pictureInstance = axios.create({
+  baseURL: baseUrl, // Your API base URL
+  headers: {
+    'Content-Type': 'multipart/form-data', // Use multipart/form-data for sending files
+    'Authorization': `Bearer ${getToken()}`,
+  },
 });
 
-// Request interceptor
-API.interceptors.request.use(
-  (config: any) => {
-    // You can add authentication tokens or modify headers here
-    const token = localStorage.getItem("token"); // Example: getting a token from local storage
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config; // Always return the config
-  },
-  (error: any) => {
-    // Handle request errors
-    return Promise.reject(error); // Reject the promise to handle in the catch block
-  }
-);
 
-// Response interceptor
-API.interceptors.response.use(
-  (response: any) => {
-    // Handle the response data here if needed
-    return response; // Always return the response
-  },
-  (error: any) => {
-    // Handle response errors
-    if (error.response) {
-      // Server responded with a status other than 200 range
-      //   alert(`Error: ${error.response.data.message || 'An error occurred'}`);
-    } else {
-      // Network error or other issues
-      //   alert('Network error: Unable to connect to the server');
-    }
-    return Promise.reject(error); // Reject the promise
-  }
-);
 
-export default API;
+export default instance;

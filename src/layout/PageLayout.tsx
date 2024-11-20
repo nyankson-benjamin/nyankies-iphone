@@ -6,15 +6,16 @@ import { useAuthStore } from "../store/AuthStore";
 import { navLinks, navAuth, navLinksAdmin } from "../constants/Navlinks";
 import OtherRoutes from "../components/OtherRoutes";
 import { useScreenWidth } from "../hooks/useScreenWidth";
+import { isLoggedIn } from "../services/auth";
 export default function PageLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const { isSidebarOpen } = useUI();
-  const { isAuthenticated, user } = useAuthStore();
+  const { user } = useAuthStore();
   let links: { name: string; path: string }[] = [];
-  if (!isAuthenticated) {
+  if (!isLoggedIn()) {
     links = navAuth;
   } else if (user?.role === "admin") {
     links = [...navLinks, ...navLinksAdmin];
@@ -26,7 +27,7 @@ export default function PageLayout({
     <div>
       <TopNavBar />
       {isSidebarOpen && <SideBar links={links} />}
-      {isAuthenticated && user?.role === "admin" && <AdminNavBar />}
+      {isLoggedIn() && user?.role === "admin" && <AdminNavBar />}
      { width < 768 && <OtherRoutes />}
       {children}
     </div>

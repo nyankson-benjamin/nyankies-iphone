@@ -18,7 +18,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { user } = useAuthStore();
   const location = useLocation();
-  const { addToCart, message } = useCartStore();
+  const { addToCart } = useCartStore();
   const { showAlert } = useAlert();
   const { removeProduct } = useProductStore();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -61,7 +61,6 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="w-full flex items-center justify-center gap-2"
               onClick={() => {
                 addToCart({ ...product, quantity: 1 });
-                showAlert(message, "success");
               }}
             >
               <CartIcon />

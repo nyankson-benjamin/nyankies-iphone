@@ -22,19 +22,24 @@ export const useLogin = () => {
     validationSchema: loginSchema,
     onSubmit: async (values: LoginValues) => {
       try {
-        const response = await API.post<{ user: User; token: string, message: string }>("/api/auth/login", values);
+        const response = await API.post<{
+          user: User;
+          token: string;
+          message: string;
+        }>("/api/auth/login", values);
         showAlert(
           response?.data?.message || "Operation successful!",
           "success"
         );
-        setToken(response?.data?.token);   
+        setToken(response?.data?.token);
         setUser(decodeToken());
         setTimeout(() => {
           navigate("/", { replace: true });
         }, 500);
-      } catch (error:any) {
+      } catch (error) {
+        const err = error as { response: { data: { message: string } } };
         showAlert(
-          error?.response?.data?.message || "Something went wrong!",
+          err?.response?.data?.message || "Something went wrong!",
           "error"
         );
       }

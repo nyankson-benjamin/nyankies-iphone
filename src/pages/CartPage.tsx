@@ -7,11 +7,12 @@ import { useAuthStore } from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useState } from "react";
+import { isLoggedIn } from "../services/auth";
 
 export default function CartPage() {
   const { cart, cartTotal, updateCartItemQuantity, removeFromCart, clearCart } =
     useCartStore();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user } = useAuthStore();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const hanndleCheckOut = async () => {
@@ -123,7 +124,7 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-              {isAuthenticated ? (
+              {isLoggedIn() ? (
                 <PayStack
                   amount={cartTotal}
                   handlePurchase={() => hanndleCheckOut()}

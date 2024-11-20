@@ -4,30 +4,36 @@ import { useUI } from "../../hooks/useUI";
 import { useScreenWidth } from "../../hooks/useScreenWidth";
 import CategoriesDropDown from "./CategoriesDropDown";
 import UserDropdown from "./UserDropdown";
-import { useAuthStore } from "../../store/AuthStore";
 import { authRoutes } from "../../constants/Navlinks";
 import NavBarLinks from "./NavBarLinks";
 import CartIcon from "../../assets/icons/CartIcon";
 // import { useCartStore } from "../../store/CartStore";
 import { useCartStore } from "../../store/useCart";
+import { isLoggedIn } from "../../services/auth";
+import { useEffect } from "react";
 
+const Logo = () => {
+  return (
+    <Link
+      to="/"
+      className="text-primaryDeep font-extrabold text-xl sm:text-2xl md:text-3xl italic"
+    >
+      Nyankies iShop
+    </Link>
+  );
+};
 export default function TopNavBar() {
   const { toggleSidebar, closeSidebar } = useUI();
-  const { isAuthenticated } = useAuthStore();
   const width = useScreenWidth();
   const { cart } = useCartStore();
 
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      localStorage.removeItem("auth-storage");
+    }
+  }, []);
+
   if (width > 768) closeSidebar();
-  const Logo = () => {
-    return (
-      <Link
-        to="/"
-        className="text-primaryDeep font-extrabold text-xl sm:text-2xl md:text-3xl italic"
-      >
-        Nyankies iShop
-      </Link>
-    );
-  };
 
   return (
     <nav className="h-16 shadow-sm bg-white">
@@ -49,8 +55,7 @@ export default function TopNavBar() {
             )}
           </Link>
           {width > 768 && <CategoriesDropDown />}
-          {!isAuthenticated && <NavBarLinks links={authRoutes} />}
-          {isAuthenticated && <UserDropdown />}
+          {isLoggedIn() ? <UserDropdown /> : <NavBarLinks links={authRoutes} />}
         </div>
       </div>
     </nav>

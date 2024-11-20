@@ -45,7 +45,7 @@ export const useCartStore = create<CartStore>()(
               cart: state.cart.filter((item) => item._id !== productId),
               cartTotal:
                 state.cartTotal -
-                (itemToRemove?.price || 0) * (itemToRemove?.quantity || 1),
+                (itemToRemove?.price ?? 0) * (itemToRemove?.quantity ?? 1),
               message: "Item removed from cart",
             };
           }),
